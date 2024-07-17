@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="button">bấm</button>
+    <script>
+        $("#button").click(function (e) {
+            getWebContent('https://www.sciencedirect.com/');
+        });
+
+        async function getWebContent(url) {
+            try {
+                // Gửi request đến URL
+                const response = await fetch(url);
+
+                // Kiểm tra nếu response thành công
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // Lấy nội dung HTML
+                const html = await response.text();
+
+                // Tạo một DOM parser
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // Lấy nội dung cụ thể, ví dụ: tất cả các đoạn văn
+                const paragraphs = doc.querySelectorAll('p');
+
+                // In ra nội dung của các đoạn văn
+                paragraphs.forEach(p => console.log(p.textContent));
+
+            } catch (error) {
+                console.error('Có lỗi:', error);
+            }
+        }
+
+        // Sử dụng hàm
+
+    </script>
+</body>
+
+</html>
